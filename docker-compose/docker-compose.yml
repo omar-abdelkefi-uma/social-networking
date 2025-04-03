@@ -1,0 +1,42 @@
+services:
+  pfe-kickoffdb:
+    container_name: pfe-kickoffdb
+    ports:
+      - 3300:3306
+    environment:
+      MYSQL_DATABASE: pfe-kickoffdb
+    extends:
+      file: common-config.yml
+      service: microservice-db-config
+
+
+  pfe-kickoffs:
+    image: "pfe-kickoff"
+    container_name: pfe-kickoffs-ms
+    ports:
+      - "8080:8080"
+      - "587:587"
+    environment:
+      SPRING_APPLICATION_NAME: "pfe-kickoffs"
+      SPRING_DATASOURCE_URL: "jdbc:mysql://pfe-kickoffdb:3306/pfe-kickoffdb"
+    depends_on:
+      pfe-kickoffdb:
+        condition: service_healthy
+    extends:
+      file: common-config.yml
+      service: microservice-configserver-config
+      
+  app-front:
+    image: "app-front"
+    container_name: app-front-mf
+    ports:
+      - "4000:80"
+    extends:
+      file: common-config.yml
+      service: microservice-configserver-config
+
+  
+
+networks:
+  eazybank:
+    driver: "bridge"

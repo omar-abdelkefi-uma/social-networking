@@ -1,0 +1,81 @@
+app:
+  auth:
+    tokenSecret: 926D96C90030DD58429D2751AC1BDBBC
+    tokenExpirationMsec: 864000000
+  oauth2:
+    authorizedRedirectUris: http://localhost:4200/oauth2/redirect,myandroidapp://oauth2/redirect,myiosapp://oauth2/redirect
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            clientId: 
+            clientSecret: 
+            scope:
+              - email
+              - profile
+          github:
+            clientId: 
+            clientSecret: 
+            scope:
+              - email
+              - public_profile
+
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/pfe?createDatabaseIfNotExist=true
+    username: root
+    password: 
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    generate-ddl: true
+    database-platform: org.hibernate.dialect.MySQLDialect
+    defer-datasource-initialization: false
+
+  sql:
+    init:
+      mode: always
+      continue-on-error: true
+
+  mail:
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            auth: true
+            enable: true
+    protocol: smtp
+    default-encoding: UTF-8
+    test-connection: false
+    host: smtp.gmail.com
+    username: testtest130138@gmail.com
+    password: Test123456**
+
+    port: 587
+
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 100MB
+      max-request-size: 150MB
+
+jwt:
+  secret: jsonsecret
+
+emailExpirationPeriode: 1
+
+#  86_400_000 == 1 day
+tokenExpirationPeriode: 86400000
+
+# 0.000694444 day = expiration Period 1 min
+expirationPeriodCookies: 0.000694444
+
+# document storage properties
+document:
+  upload-directory: "documents"
